@@ -1,0 +1,21 @@
+---
+configuration:
+    name: "Test benchmark"
+    description: "Benchmark testing a time required for round tip of messages"
+    directory: test_bench
+    cron: "0 * * * *"
+    output-type: multiple-nodes-single-value
+    instance-number: 2
+    instance-types:
+      - t2.micro
+nodes:
+  - node-id: 0
+    output-command: python3 format_output.py result.txt
+
+  - node-id: 1
+    ansible-configuration: server.yml
+    benchmark-command: ./server > result.txt
+
+  - node-id: 2
+    ansible-configuration: client.yml
+    benchmark-command: ./client node-1 > result.txt
