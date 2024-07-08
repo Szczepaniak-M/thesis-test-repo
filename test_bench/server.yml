@@ -9,14 +9,10 @@
         name: g++
         state: present
 
-    - name: Compile server_ipv6.cpp
-      become: true
+    - name: Compile server.cpp
       shell: g++ -o server server.cpp
-      args:
-        chdir: ~/test_bench/
 
     - name: Confirm compilation success
-      become: true
       stat:
         path: ~/test_bench/server
       register: server_compiled

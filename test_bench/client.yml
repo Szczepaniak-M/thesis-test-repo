@@ -9,14 +9,10 @@
         name: g++
         state: present
 
-    - name: Compile client_ipv6.cpp
-      become: true
+    - name: Compile client.cpp
       shell: g++ -o client client.cpp
-      args:
-        chdir: ~/test_bench
 
     - name: Confirm compilation success
-      become: true
       stat:
         path: ~/test_bench/client
       register: client_compiled
