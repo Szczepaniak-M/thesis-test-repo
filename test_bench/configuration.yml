@@ -1,7 +1,7 @@
 ---
 configuration:
     name: "Test benchmark"
-    description: "Benchmark testing a time required for round tip of messages"
+    description: "Benchmark testing a time required for round trip of messages"
     directory: test_bench
     cron: "0 * * * *"
     output-type: multiple-nodes-single-value
