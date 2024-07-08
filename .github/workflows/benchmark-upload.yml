@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+env:
+  DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
 jobs:
   analyze-config-file:
     runs-on: ubuntu-latest
