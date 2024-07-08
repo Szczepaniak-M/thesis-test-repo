@@ -1,0 +1,27 @@
+---
+- name: Compile C++ Client Program
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Install g++
+      become: true
+      package:
+        name: g++
+        state: present
+
+    - name: Compile client_ipv6.cpp
+      become: true
+      shell: g++ -o client client.cpp
+      args:
+        chdir: ~/test_bench
+
+    - name: Confirm compilation success
+      become: true
+      stat:
+        path: ~/test_bench/client
+      register: client_compiled
+
+    - name: Print compilation status
+      debug:
+        msg: "Client compilation {{ 'succeeded' if client_compiled.stat.exists else 'failed' }}."
+

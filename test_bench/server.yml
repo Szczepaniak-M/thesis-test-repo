@@ -1,0 +1,27 @@
+---
+- name: Compile C++ Server Program
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Install g++
+      become: true
+      package:
+        name: g++
+        state: present
+
+    - name: Compile server_ipv6.cpp
+      become: true
+      shell: g++ -o server server.cpp
+      args:
+        chdir: ~/test_bench/
+
+    - name: Confirm compilation success
+      become: true
+      stat:
+        path: ~/test_bench/server
+      register: server_compiled
+
+    - name: Print compilation status
+      debug:
+        msg: "Server compilation {{ 'succeeded' if server_compiled.stat.exists else 'failed' }}."
+
