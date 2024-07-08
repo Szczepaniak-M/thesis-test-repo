@@ -16,7 +16,7 @@ def extract_round_trip_time(file_path):
                 round_trip_time = float(match.group(1))
                 break
 
-    result = {f"{client_or_server}_round_trip_time_ms": round_trip_time} if round_trip_time is not None else {}
+    result = {f"value": round_trip_time} if round_trip_time is not None else {f"value": 0}
 
     json_output = json.dumps(result, indent=4)
     print(json_output)
