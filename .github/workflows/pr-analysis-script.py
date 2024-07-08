@@ -92,7 +92,7 @@ def analyze_configuration_file(yaml_file):
             if not isinstance(yaml_data['configuration']['instance-types'], list):
                 print_stderr(f"'instance-types' in 'configuration' should be of type list.")
                 return 1
-            client = boto3.client('ec2')
+            client = boto3.client('ec2', region_name='us-east-1')
             aws_instances = client._service_model.shape_for('InstanceType').enum
             for instance_type in yaml_data['configuration']['instance-types']:
                 if instance_type not in aws_instances:
@@ -235,7 +235,7 @@ def analyze_configuration_file(yaml_file):
                 if not isinstance(node['instance-type'], str):
                     print_stderr(f"'instance-type' in 'node' should be of type str.")
                     return 1
-                client = boto3.client('ec2')
+                client = boto3.client('ec2', region_name='us-east-1')
                 aws_instances = client._service_model.shape_for('InstanceType').enum
                 if node['instance-type'] not in aws_instances:
                     print_stderr(f"Incorrect value of EC2 instance in 'instance-type' for node with ID = {node['node-id']}.")
