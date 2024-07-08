@@ -72,7 +72,7 @@ int main(int argc, char *argv[]) {
     std::cout << "Sent random integer: " << random_integer << std::endl;
     std::cout << "Received integer: " << received_value << std::endl;
     std::cout << "Received incremented integer back: " << buffer << std::endl;
-    std::cout << "Round-trip time (client-side): " << elapsed.count() << " ms" << std::endl;
+    std::cout << "Round-trip time: " << elapsed.count() << " ms" << std::endl;
 
     close(sock);
     return 0;

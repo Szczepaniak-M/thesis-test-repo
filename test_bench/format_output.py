@@ -3,8 +3,7 @@ import re
 import json
 
 def extract_round_trip_time(file_path):
-    pattern = r'^Round-trip time \(client-side\): (\d+\.\d+) ms$'
-
+    pattern = r'^Round-trip time: (\d+\.\d+) ms$'
     round_trip_time = None
     client_or_server = None
 
