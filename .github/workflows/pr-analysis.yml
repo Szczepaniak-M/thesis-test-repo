@@ -40,7 +40,7 @@ jobs:
         else
           config_file=$(cat new_config_files.txt)
           echo "Found configuration.yml file: $config_file"
-          echo "::set-output name=config_file::$config_file"
+          echo "config_file=$config_file" >> $GITHUB_OUTPUT
         fi
 
     - name: Run Python script on configuration.yml
