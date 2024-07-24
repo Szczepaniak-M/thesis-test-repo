@@ -45,25 +45,24 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    auto start = std::chrono::high_resolution_clock::now();
-    send(new_socket, &random_integer, sizeof(random_integer), 0);
+    std::cout << "Server" << std::endl;
+    for(int i = 0; i < 11; i++) {
+        auto start = std::chrono::high_resolution_clock::now();
+        send(new_socket, &random_integer, sizeof(random_integer), 0);
 
-    read(new_socket, &buffer, sizeof(buffer));
-    received_value = buffer;
+        read(new_socket, &buffer, sizeof(buffer));
+        received_value = buffer;
 
-    buffer++;
-    send(new_socket, &buffer, sizeof(buffer), 0);
+        buffer++;
+        send(new_socket, &buffer, sizeof(buffer), 0);
 
-    read(new_socket, &buffer, sizeof(buffer));
+        read(new_socket, &buffer, sizeof(buffer));
 
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> elapsed = end - start;
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> elapsed = end - start;
 
-    std::cout << "server" << std::endl;
-    std::cout << "Sent random integer: " << random_integer << std::endl;
-    std::cout << "Received integer: " << received_value << std::endl;
-    std::cout << "Received incremented integer back: " << buffer << std::endl;
-    std::cout << "Round-trip time: " << elapsed.count() << " ms" << std::endl;
+        std::cout << "Round-trip time: " << elapsed.count() << " ms" << std::endl;
+    }
 
     close(new_socket);
     close(server_fd);

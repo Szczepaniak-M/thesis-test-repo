@@ -1,7 +1,7 @@
 ---
 configuration:
     name: "Test benchmark"
-    description: "Benchmark testing a time required for round trip of messages"
+    description: "Benchmark testing a time required for round tip of messages"
     directory: test_bench
     cron: "0 * * * *"
     output-type: multiple-nodes-single-value
@@ -19,3 +19,24 @@ nodes:
   - node-id: 2
     ansible-configuration: client.yml
     benchmark-command: ./client node-1 > result.txt
+
+plots:
+  - type: scatter
+    title: First round-trip time
+    yaxis: Time [ms]
+    data:
+      - y: firstRoundTripServer
+        legend: Server
+      - y: firstRoundTripClient
+        legend: Client
+  - type: line
+    title: Example line plot
+    xaxis: Execution number
+    yaxis: Time [ms]
+    data:
+      - x: listRoundTripServer
+        y: increasingValues
+        legend: Server
+      - x: listRoundTripClient
+        y: customYValues
+        legend: Client

@@ -4,7 +4,8 @@ import json
 
 def extract_round_trip_time(file_path):
     pattern = r'^Round-trip time: (\d+\.\d+) ms$'
-    round_trip_time = None
+
+    round_trip_time = []
     client_or_server = None
 
 
@@ -13,10 +14,19 @@ def extract_round_trip_time(file_path):
         for line in file:
             match = re.match(pattern, line.strip())
             if match:
-                round_trip_time = float(match.group(1))
-                break
+                round_trip_time.append(float(match.group(1)))
 
-    result = {f"value": round_trip_time} if round_trip_time is not None else {f"value": 0}
+    if client_or_server == 'Client':
+        result = {
+            f"firstRoundTrip{client_or_server}": round_trip_time[0],
+            f"listRoundTrip{client_or_server}": round_trip_time[1:],
+            "customYValues": [1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, 10.1]
+        }
+    else:
+        result = {
+            f"firstRoundTrip{client_or_server}": round_trip_time[0],
+            f"listRoundTrip{client_or_server}": round_trip_time[1:],
+        }
 
     json_output = json.dumps(result, indent=4)
     print(json_output)
