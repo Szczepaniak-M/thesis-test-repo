@@ -52,27 +52,23 @@ int main(int argc, char *argv[]) {
     }
 
     freeaddrinfo(res);
+    std::cout << "Client" << std::endl;
+    for(int i = 0; i < 11; i++) {
+        auto start = std::chrono::high_resolution_clock::now();
+        send(sock, &random_integer, sizeof(random_integer), 0);
 
+        read(sock, &buffer, sizeof(buffer));
+        received_value = buffer;
 
-    auto start = std::chrono::high_resolution_clock::now();
-    send(sock, &random_integer, sizeof(random_integer), 0);
+        buffer++;
+        send(sock, &buffer, sizeof(buffer), 0);
 
-    read(sock, &buffer, sizeof(buffer));
-    received_value = buffer;
+        read(sock, &buffer, sizeof(buffer));
 
-    buffer++;
-    send(sock, &buffer, sizeof(buffer), 0);
-
-    read(sock, &buffer, sizeof(buffer));
-
-    auto end = std::chrono::high_resolution_clock::now();
-    std::chrono::duration<double, std::milli> elapsed = end - start;
-
-    std::cout << "client" << std::endl;
-    std::cout << "Sent random integer: " << random_integer << std::endl;
-    std::cout << "Received integer: " << received_value << std::endl;
-    std::cout << "Received incremented integer back: " << buffer << std::endl;
-    std::cout << "Round-trip time: " << elapsed.count() << " ms" << std::endl;
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> elapsed = end - start;
+        std::cout << "Round-trip time: " << elapsed.count() << " ms" << std::endl;
+    }
 
     close(sock);
     return 0;
