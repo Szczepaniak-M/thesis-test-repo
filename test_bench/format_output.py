@@ -20,7 +20,7 @@ def extract_round_trip_time(file_path):
         result = {
             f"firstRoundTrip{client_or_server}": round_trip_time[0],
             f"listRoundTrip{client_or_server}": round_trip_time[1:],
-            "customYValues": [1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, 10.1]
+            "customXValues": [1.1, 2.1, 3.1, 4.1, 5.1, 6.1, 7.1, 8.1, 9.1, 10.1]
         }
     else:
         result = {
