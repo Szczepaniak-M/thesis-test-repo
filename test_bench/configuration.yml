@@ -24,7 +24,7 @@ plots:
   - type: scatter
     title: First round-trip time
     yaxis: Time [ms]
-    data:
+    series:
       - y: firstRoundTripServer
         legend: Server
       - y: firstRoundTripClient
@@ -33,7 +33,7 @@ plots:
     title: Example line plot
     xaxis: Execution number
     yaxis: Time [ms]
-    data:
+    series:
       - x: listRoundTripServer
         y: increasingValues
         legend: Server
