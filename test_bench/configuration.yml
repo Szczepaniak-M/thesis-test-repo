@@ -34,9 +34,9 @@ plots:
     xaxis: Execution number
     yaxis: Time [ms]
     series:
-      - x: listRoundTripServer
-        y: increasingValues
+      - x: increasingValues
+        y: listRoundTripServer
         legend: Server
-      - x: listRoundTripClient
-        y: customYValues
+      - x: customXValues
+        y: listRoundTripClient 
         legend: Client
