@@ -1,7 +1,5 @@
 ---
 - name: Compile C++ Client Program
-  hosts: localhost
-  gather_facts: false
   tasks:
     - name: Install g++
       become: true
