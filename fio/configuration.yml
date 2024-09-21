@@ -2,17 +2,16 @@
 configuration:
     name: "FIO"
     description: "Flexible I/O - benchmark for SSD"
-    directory: memory_bandwidth
+    directory: fio
     cron: "0 * * * *"
     instance-number: 1
     instance-types:
-      - c5ad.large
+      - t2.micro
 nodes:
   - node-id: 0
     ansible-configuration: ansible.yml
     benchmark-command: ./run_fio.sh
     output-command: python3 format_output.py
-
 plots:
   - type: line
     title: CPU Benchmark - Events per second
