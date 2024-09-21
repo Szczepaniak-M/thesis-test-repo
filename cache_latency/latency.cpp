@@ -53,7 +53,7 @@ static void* readThread(void *arg) {
    for (unsigned j=0; j<ool; j++)
       sum+=x[j];
 
-   cout << threadNum << ": " << (rdtsc()-start)/(double)rep << " "<< sum << endl;
+   // cout << threadNum << ": " << (rdtsc()-start)/(double)rep << " "<< sum << endl;
 
    return (void*) ((rdtsc()-start)/rep);
 }
