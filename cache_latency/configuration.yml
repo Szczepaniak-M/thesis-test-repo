@@ -1,0 +1,25 @@
+---
+configuration:
+    name: "Memory latency"
+    description: "Memory latency"
+    directory: memory_latency
+    cron: "0 * * * *"
+    instance-number: 1
+    instance-types:
+      - t2.micro
+nodes:
+  - node-id: 0
+    ansible-configuration: ansible.yml
+    benchmark-command: ./run_latency.sh
+    output-command: python3 format_output.py results.txt
+
+plots:
+  - type: line
+    title: CPU Benchmark - Events per second
+    xaxis: Threads number
+    yaxis: Events per second
+    data:
+      - x: threads_0
+        y: events_per_sec_0
+        legend: Instance 1
+

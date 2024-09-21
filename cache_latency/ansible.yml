@@ -1,0 +1,26 @@
+---
+- name: Install sysbench and dependencies
+  tasks:
+    - name: Update apt cache
+      become: yes
+      apt:
+        update_cache: yes
+
+    - name: Install dependencies
+      become: yes
+      apt:
+        name:
+          - g++
+        state: present
+
+    - name: Install dependencies
+      command: g++ latency.cpp -o latency -O3 -march=native
+      args:
+        chdir: ~/cache_bandwidth
+
+
+    - name: Make run_fio.sh executable
+      become: yes
+      file:
+        path: ~/cache_latency/run_latency.sh
+        mode: '0755'
