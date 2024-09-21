@@ -29,5 +29,5 @@
 
     - name: Set huge pages
       become: yes
-      command: bash -c \"echo 4000 > /proc/sys/vm/nr_hugepages\"
+      command: 'bash -c "echo 4000 > /proc/sys/vm/nr_hugepages"'
 
