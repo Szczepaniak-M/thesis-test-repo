@@ -10,9 +10,9 @@ def parse_file_to_json(file_path):
     time_list = []
     threads_list = []
     thread_count_list = []
-    for i in range(0, len(lines), 2):
-        final_values = lines[0].strip()
-        threads_times = lines[1].strip()
+    for i in range(0, len(lines), 3):
+        final_values = lines[i+1].strip()
+        threads_times = lines[i+2].strip()
 
         _, throughput_memory, throughput_elements, time_ns = final_values.split()
 

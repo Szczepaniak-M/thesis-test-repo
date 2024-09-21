@@ -1,6 +1,0 @@
-./latency 5 100 10 10
-
-final: 0.0691372GB/s 4310.61 43106.1ns  // throughput_memory  throughput_elements time
-57245 109071 68257 86796 90449  // Threads times
-
-
