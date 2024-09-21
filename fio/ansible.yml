@@ -1,5 +1,6 @@
 ---
-- name: Install sysbench and dependencies
+- name: Install fio and dependencies
+  hosts: localhost
   tasks:
     - name: Update apt cache
       become: yes
@@ -14,7 +15,6 @@
         state: present
 
     - name: Make run_fio.sh executable
-      become: yes
       file:
         path: ~/fio/run_fio.sh
         mode: '0755'
