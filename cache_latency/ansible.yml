@@ -20,7 +20,7 @@
         chdir: ~/cache_latency
 
 
-    - name: Make run_fio.sh executable
+    - name: Make run_latency.sh executable
       file:
         path: ~/cache_latency/run_latency.sh
         mode: '0755'
