@@ -19,7 +19,7 @@
         path: ~/fio/run_fio.sh
         mode: '0755'
 
-    - name: Make SSD readeable and writable
+    - name: Make SSD readable and writable
       become: yes
       file:
         path: /dev/nvme0n1
