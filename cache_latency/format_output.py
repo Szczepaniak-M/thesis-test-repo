@@ -30,7 +30,7 @@ def parse_file_to_json(file_path):
 
     data = {
         "thread_counts": thread_count_list,
-        "throughput_memory_gb_s": throughput_memory_list,
+        "throughput_gb_s": throughput_memory_list,
         "throughput_elements": throughput_elements_list,
         "time_ns": time_list,
         "threads_times": threads_list

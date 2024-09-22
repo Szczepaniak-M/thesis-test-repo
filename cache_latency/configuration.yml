@@ -1,8 +1,7 @@
----
 configuration:
-    name: "Memory latency"
-    description: "Memory latency"
-    directory: memory_latency
+    name: "Cache latency"
+    description: "Benchmark analyzing the basic properties of the cache"
+    directory: cache_latency
     cron: "0 * * * *"
     instance-number: 1
     instance-types:
@@ -12,14 +11,33 @@ nodes:
     ansible-configuration: ansible.yml
     benchmark-command: ./run_latency.sh
     output-command: python3 format_output.py results.txt
-
 plots:
   - type: line
-    title: CPU Benchmark - Events per second
+    title: Cache throughput per number of threads
     xaxis: Threads number
-    yaxis: Events per second
+    yaxis: Cache throughput [GB/s]
     data:
-      - x: threads_0
-        y: events_per_sec_0
-        legend: Instance 1
+      - x: thread_counts
+        y: throughput_gb_s
+        legend: Memory throughput
 
+  - type: line
+    title: Cache throughput per number of threads
+    xaxis: Threads number
+    yaxis: Throughput [GB/s]
+    data:
+      - x: thread_counts
+        y: throughput_elements
+        legend: Elements throughput
+
+  - type: line
+    title: Cache throughput per number of threads
+    xaxis: Threads number
+    yaxis: Time [ns]
+    data:
+      - x: thread_counts
+        y: time_ns
+        legend: Processing time
+
+series-other:
+  - threads_times
