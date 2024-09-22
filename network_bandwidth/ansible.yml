@@ -1,0 +1,16 @@
+---
+- name: Install iperf
+  tasks:
+    - name: Install dependencies
+      become: yes
+      apt:
+        name:
+          - iperf
+        state: present
+
+    - name: Make run_bandwidth.sh executable
+      file:
+        path: ~/bandwidth/run_bandwidth.sh
+        mode: '0755'
+
+
