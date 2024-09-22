@@ -1,0 +1,34 @@
+---
+configuration:
+    name: Network Latency
+    description: Benchmark using sockperf to test network latency
+    directory: network_latency
+    cron: "0 * * * *"
+    instance-number: 2
+    instance-types:
+      - t2.micro
+nodes:
+  - node-id: 0
+    ansible-configuration: ansible.yml
+
+  - node-id: 1
+    benchmark-command: ./run_latency_bench.sh
+    output-command: python3 format_output.py results.txt
+
+  - node-id: 2
+    benchmark-command: nohup ./sockperf server -i node-2 --tcp &
+    instance-type: t2.micro #c7gn.metal
+
+plots:
+  - type: scatter
+    title: Round-trip time
+    yaxis: Time [us]
+    series:
+      - y: min_latency_us
+        legend: Minimum
+      - y: avg_latency_us
+        legend: Average
+      - y: percentile_99_us
+        legend: Percentile 99th
+      - y: Maximum
+        legend: Client

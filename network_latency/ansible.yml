@@ -1,0 +1,46 @@
+---
+- name: Install and run sockperf
+  tasks:
+    - name: Install dependencies
+      become: yes
+      apt:
+        name:
+          - git
+          - perl
+          - make
+          - automake
+          - autoconf
+          - m4
+          - libtool-bin
+          - g++
+        state: present
+
+    - name: Clone sockperf repository
+      git:
+        repo: "https://github.com/Mellanox/sockperf.git"
+        dest: ~/network_latency
+
+    - name: Run autogen.sh
+      command: ./autogen.sh
+      args:
+        chdir: ~/network_latency
+
+    - name: Configure network_latency
+      command: ./configure
+      args:
+        chdir: ~/network_latency
+
+    - name: Compile sockperf
+      make:
+        chdir: ~/network_latency
+
+    - name: Install sockperf
+      become: yes
+      command: make install
+      args:
+        chdir: home/ubuntu/network_latency
+
+    - name: Make run_latency_bench.sh executable
+      file:
+        path: ~/network_latency/run_latency_bench.sh
+        mode: '0755'
