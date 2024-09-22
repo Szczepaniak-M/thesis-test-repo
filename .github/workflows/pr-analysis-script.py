@@ -42,6 +42,7 @@ def analyze_configuration_file(yaml_file):
         check_plots_section(yaml_data)
         for plot in yaml_data['plots']:
             check_plot(plot)
+        check_series_other(yaml_data)
     except ValueError as e:
         print_stderr(e)
         return 1
@@ -182,9 +183,7 @@ def get_default_node_configuration(nodes):
             raise ValueError("'output-command' in 'node' should be of type str.")
 
         # Check image
-        if 'image' in default_node \
-                and not isinstance(default_node['image'], str):
-            raise ValueError("'image' in 'node' should be of type str.")
+        check_image(default_node)
 
         # Check instance type
         if 'instance-type' in default_node:
@@ -227,8 +226,17 @@ def check_output_command(default_node, node):
 
 
 def check_image(node):
-    if 'image' in node and not isinstance(node['image'], str):
-        raise ValueError("'image' in 'node' should be of type str.")
+    if 'image-x86' in node \
+            and not isinstance(node['image-x86'], str):
+        raise ValueError("'image-x86' in 'node' should be of type str.")
+
+    if 'image-arm' in node \
+            and not isinstance(node['image-arm'], str):
+        raise ValueError("'image-arm' in 'node' should be of type str.")
+
+    if ('image-x86' in node and not 'image-arm' in node) \
+            or ('image-arm' in node and not 'image-x86' in node):
+        raise ValueError("'image-x86' and 'image-arm' in 'node' should be defined together.")
 
 
 def check_instance_type(node):
@@ -259,7 +267,7 @@ def check_plot(plot):
     check_title(plot)
     check_xaxis(plot, plot_type)
     check_yaxis(plot)
-    check_data(plot, plot_type)
+    check_series(plot, plot_type)
 
 
 def check_plot_type(plot):
@@ -285,29 +293,42 @@ def check_xaxis(plot, plot_type):
 
 def check_yaxis(plot):
     check_str('yaxis', plot, 'plots')
+    check_log_scale(plot)
 
 
-def check_data(plot, plot_type):
-    if 'data' not in plot:
-        raise ValueError("Missing 'data' in 'plots' section.")
-    if not isinstance(plot['data'], list):
-        raise ValueError("'data' should be of type list.")
-    for data in plot['data']:
-        check_str('y', data, 'data')
-        check_str('legend', data, 'data')
+def check_series(plot, plot_type):
+    if 'series' not in plot:
+        raise ValueError("Missing 'series' in 'plots' section.")
+    if not isinstance(plot['series'], list):
+        raise ValueError("'series' should be of type list.")
+    for series in plot['series']:
+        check_str('y', series, 'series')
+        check_str('legend', series, 'series')
         if plot_type == 'scatter':
-            if 'x' in data:
+            if 'x' in series:
                 raise ValueError("Parameter 'x' not allowed for 'scatter' type. "
                                  "X-axis is always an execution timestamp")
         elif plot_type == 'line':
-            check_str('x', data, 'data')
+            check_str('x', series, 'series')
 
+def check_series_other(yaml_data):
+    if 'series-other' in yaml_data:
+        if not isinstance(yaml_data['series-other'], list):
+            raise ValueError("'series-other' should be of type list.")
+        for series in yaml_data['series-other']:
+            if not isinstance(series, str):
+                raise ValueError(f"'{series}' in 'series-other' should be of type str.")
 
 def check_str(key, dictionary, dictionary_name):
     if key not in dictionary:
         raise ValueError(f"Missing '{key}' in '{dictionary_name}' section.")
     if not isinstance(dictionary[key], str):
         raise ValueError(f"'{key}' in '{dictionary_name}' should be of type str.")
+
+def check_log_scale(dictionary):
+    if 'yaxis-log' in dictionary:
+        if not isinstance(dictionary['yaxis-log'], int) and dictionary['yaxis-log'] != 'e':
+            raise ValueError(f"'yaxis-log' in 'plots' should be of type int or equals 'e'.")
 
 
 def print_stderr(*args, **kwargs):
