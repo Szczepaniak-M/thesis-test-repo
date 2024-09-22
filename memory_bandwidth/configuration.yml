@@ -1,7 +1,7 @@
 ---
 configuration:
     name: "Memory Bandwidth"
-    description: "Benchmark testing Memory Bandwidth"
+    description: "Benchmark testing Memory Bandwidth for different number of threads"
     directory: memory_bandwidth
     cron: "0 * * * *"
     instance-number: 1
@@ -15,10 +15,10 @@ nodes:
 
 plots:
   - type: line
-    title: Bandwidth
+    title: Bandwidth depending on number of threads
     xaxis: Threads count
-    yaxis: Bandwidth
+    yaxis: Memory Bandwidth [GB/s]
     data:
-      - x: threads
-        y: bandwidth
-        legend: Instance
+      - x: thread_counts
+        y: memory_bandwidth
+        legend: Memory bandwidth
