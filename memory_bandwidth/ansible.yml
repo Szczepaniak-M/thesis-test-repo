@@ -20,11 +20,11 @@
     - name: Compile membw.cpp with optimizations
       command: g++ membw.cpp -o membw -O3 -ltbb -march=native
       args:
-        chdir: ~/memory_bandwidth
+        chdir: /home/ubuntu/memory_bandwidth
 
     - name: Make run_membw.sh executable
       file:
-        path: ~/memory_bandwidth/run_membw.sh
+        path: /home/ubuntu/memory_bandwidth/run_membw.sh
         mode: '0755'
 
     - name: Set huge pages
