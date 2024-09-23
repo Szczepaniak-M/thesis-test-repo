@@ -54,5 +54,5 @@ if __name__ == "__main__":
     data_2 = parse_iperf(file_path_2, 'second_attempt')
 
     # Output the JSON data
-    merged_dict = dict1 | dict2
+    merged_dict = data_1 | data_2
     print(json.dumps(merged_dict, indent=4))

@@ -1,5 +1,6 @@
 ---
 - name: Install iperf
+  hosts: localhost
   tasks:
     - name: Install dependencies
       become: yes
@@ -10,7 +11,5 @@
 
     - name: Make run_bandwidth.sh executable
       file:
-        path: ~/bandwidth/run_bandwidth.sh
+        path: ~/network_bandwidth/run_bandwidth.sh
         mode: '0755'
-
-
