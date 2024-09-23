@@ -11,5 +11,5 @@
 
     - name: Make run_bandwidth.sh executable
       file:
-        path: ~/network_bandwidth/run_bandwidth.sh
+        path: /home/ubuntu/network_bandwidth/run_bandwidth.sh
         mode: '0755'
