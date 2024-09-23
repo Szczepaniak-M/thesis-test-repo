@@ -16,7 +16,7 @@ nodes:
     output-command: python3 format_output.py results.txt
 
   - node-id: 2
-    benchmark-command: nohup ./sockperf server -i node-2 --tcp &
+    benchmark-command: nohup ./sockperf/sockperf server -i node-2 --tcp &
     instance-type: t2.micro #c7gn.metal
 
 plots:
@@ -24,11 +24,29 @@ plots:
     title: Round-trip time
     yaxis: Time [us]
     series:
-      - y: min_latency_us
-        legend: Minimum
-      - y: avg_latency_us
+      - y: average
         legend: Average
-      - y: percentile_99_us
-        legend: Percentile 99th
-      - y: Maximum
-        legend: Client
+      - y: average_plus_std_dev
+        legend: Average + Std Dev
+      - y: average_minus_std_dev
+        legend: Average - Std Dev
+      - y: minimum
+        legend: Minimum
+      - y: maximum
+        legend: Maximum
+      - y: percentile_99_999
+        legend: Percentile 99.999%
+      - y: percentile_99_990
+        legend: Percentile 99.99%
+      - y: percentile_99_900
+        legend: Percentile 99.9%
+      - y: percentile_99_000
+        legend: Percentile 99%
+      - y: percentile_90_000
+        legend: Percentile 90%
+      - y: percentile_75_000
+        legend: Percentile 75%
+      - y: percentile_50_000
+        legend: Median
+      - y: percentile_25_000
+        legend: Percentile 25%

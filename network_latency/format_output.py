@@ -2,31 +2,42 @@ import re
 import json
 import sys
 
-def parse_results(file_path):
-    metrics = {
-        'avg_latency_us': None,
-        'min_latency_us': None,
-        'max_latency_us': None,
-        'percentile_99_us': None
-    }
 
-    avg_pattern = re.compile(r'Avg Latency:\s+([\d\.]+)\s+usec')
-    min_pattern = re.compile(r'Min Latency:\s+([\d\.]+)\s+usec')
-    max_pattern = re.compile(r'Max Latency:\s+([\d\.]+)\s+usec')
-    percentile_99_pattern = re.compile(r'99th Percentile Latency:\s+([\d\.]+)\s+usec')
+def parse_sockperf_output(file_path):
+    parsed_data = {}
+    avg_rtt_pattern = r'avg-rtt=(\d+\.\d+)'
+    std_dev_pattern = r'std-dev=(\d+\.\d+)'
+    min_pattern = r'<MIN> observation =\s+(\d+\.\d+)'
+    max_pattern = r'<MAX> observation =\s+(\d+\.\d+)'
+    percentile_pattern = r'percentile (\d+\.\d+) =\s+(\d+\.\d+)'
 
-    with open(file_path, 'r') as f:
-        for line in f:
-            if avg_match := avg_pattern.search(line):
-                metrics['avg_latency_us'] = float(avg_match.group(1))
-            if min_match := min_pattern.search(line):
-                metrics['min_latency_us'] = float(min_match.group(1))
-            if max_match := max_pattern.search(line):
-                metrics['max_latency_us'] = float(max_match.group(1))
-            if p99_match := percentile_99_pattern.search(line):
-                metrics['percentile_99_us'] = float(p99_match.group(1))
+    with open(file_path, 'r') as file:
+        content = file.read()
 
-    print(json.dumps(metrics, indent=4))
+        avg_rtt_match = re.search(avg_rtt_pattern, content)
+        if avg_rtt_match:
+            parsed_data['average'] = float(avg_rtt_match.group(1))
+
+        std_dev_match = re.search(std_dev_pattern, content)
+        if std_dev_match:
+            parsed_data['average_plus_std_dev'] = parsed_data['average'] + float(std_dev_match.group(1))
+            parsed_data['average_minus_std_dev'] = parsed_data['average'] - float(std_dev_match.group(1))
+
+        min_match = re.search(min_pattern, content)
+        if min_match:
+            parsed_data['minimum'] = float(min_match.group(1))
+
+        max_match = re.search(max_pattern, content)
+        if max_match:
+            parsed_data['maximum'] = float(max_match.group(1))
+
+        for percentile_match in re.finditer(percentile_pattern, content):
+            percentile = percentile_match.group(1).replace('.', '_')
+            value = float(percentile_match.group(2))
+            parsed_data[f'percentile_{percentile}'] = value
+
+    print(json.dumps(parsed_data, indent=4))
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
@@ -34,4 +45,4 @@ if __name__ == "__main__":
         sys.exit(1)
 
     file_path = sys.argv[1]
-    parse_results(file_path)
+    parse_sockperf_output(file_path)
