@@ -16,7 +16,7 @@
 
     - name: Make run_fio.sh executable
       file:
-        path: ~/fio/run_fio.sh
+        path: /home/ubuntu/fio/run_fio.sh
         mode: '0755'
 
     - name: Make SSD readable and writable
