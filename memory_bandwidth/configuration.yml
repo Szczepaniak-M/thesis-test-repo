@@ -18,7 +18,7 @@ plots:
     title: Bandwidth depending on number of threads
     xaxis: Threads count
     yaxis: Memory Bandwidth [GB/s]
-    data:
+    series:
       - x: thread_counts
         y: memory_bandwidth
         legend: Memory bandwidth
