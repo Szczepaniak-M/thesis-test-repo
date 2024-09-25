@@ -17,6 +17,7 @@
         state: present
 
     - name: Ensure entries are present in /etc/hosts to allow GitHub communication via IPv6
+      become: yes
       lineinfile:
         path: /etc/hosts
         state: present
