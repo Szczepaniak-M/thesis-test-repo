@@ -1,11 +1,11 @@
 configuration:
-    name: "Cache latency"
-    description: "Benchmark analyzing the basic properties of the cache"
-    directory: cache_latency
-    cron: "0 * * * *"
-    instance-number: 1
-    instance-types:
-      - t2.micro
+  name: "Cache latency"
+  description: "Benchmark analyzing the basic properties of the cache"
+  directory: cache_latency
+  cron: "0 * * * *"
+  instance-number: 1
+  instance-types:
+    - t2.micro
 nodes:
   - node-id: 0
     ansible-configuration: ansible.yml
@@ -16,7 +16,7 @@ plots:
     title: Cache throughput per number of threads
     xaxis: Threads number
     yaxis: Cache throughput [GB/s]
-    data:
+    series:
       - x: thread_counts
         y: throughput_gb_s
         legend: Memory throughput
@@ -25,7 +25,7 @@ plots:
     title: Cache throughput per number of threads
     xaxis: Threads number
     yaxis: Throughput [GB/s]
-    data:
+    series:
       - x: thread_counts
         y: throughput_elements
         legend: Elements throughput
@@ -34,7 +34,7 @@ plots:
     title: Cache throughput per number of threads
     xaxis: Threads number
     yaxis: Time [ns]
-    data:
+    series:
       - x: thread_counts
         y: time_ns
         legend: Processing time
