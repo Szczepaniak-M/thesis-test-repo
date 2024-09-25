@@ -16,7 +16,7 @@ nodes:
     output-command: python3 format_output.py results.txt
 
   - node-id: 2
-    benchmark-command: nohup ./sockperf/sockperf server -i node-2 --tcp &
+    benchmark-command: nohup ./sockperf/sockperf server -i node-2 --tcp & echo "Server started"
     instance-type: t2.micro #c7gn.metal
 
 plots:
