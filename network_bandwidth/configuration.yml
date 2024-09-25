@@ -16,7 +16,7 @@ nodes:
     output-command: python3 format_output.py results_1.txt results_2.txt
 
   - node-id: 2
-    benchmark-command: nohup iperf -s &
+    benchmark-command: nohup iperf -s & echo "Server started"
     instance-type: t2.micro #c7gn.metal
 
 plots:
