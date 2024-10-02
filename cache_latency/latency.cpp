@@ -39,7 +39,6 @@ static void* readThread(void *arg) {
    throw;*/
 
    uint64_t start=rdtsc();
-
    uint64_t x[100];
    for (unsigned j=0; j<ool; j++)
       x[j]=j;
@@ -53,17 +52,19 @@ static void* readThread(void *arg) {
    for (unsigned j=0; j<ool; j++)
       sum+=x[j];
 
-   // cout << threadNum << ": " << (rdtsc()-start)/(double)rep << " "<< sum << endl;
+   uint64_t end=rdtsc();
+   cout << threadNum << ": " << (end-start)/(double)rep << " "<< sum << endl;
 
-   return (void*) ((rdtsc()-start)/rep);
+
+   return (void*) ((end-start)/rep);
 }
 
 int main(int argc, char** argv) {
+
    unsigned threadCount=atoi(argv[1]);
    n=atof(argv[2]);
    rep=atof(argv[3]);
    ool=atof(argv[4]);
-
    /*cpu_set_t cpuset;
    CPU_ZERO(&cpuset);
    CPU_SET(0,&cpuset);
@@ -97,7 +98,8 @@ int main(int argc, char** argv) {
 
    auto duration = (gettime()-start);
    cout << endl;
-   cout << "final: " << ((ool*threadCount*64*rep)/(1024.0*1024.0*1024.0))/duration << "GB/s " << (duration*1.0e9)/(ool*rep)  << " " << ((duration*1e9)/rep) << "ns" << endl;
+   cout << "final: " << threadCount << " " << n << " ";
+   cout << ((ool*threadCount*64*rep)/(1024.0*1024.0*1024.0))/duration << "GB/s " << (duration*1.0e9)/(ool*rep)  << " " << ((duration*1e9)/rep) << "ns" << endl;
    for (unsigned i=0; i<threadCount; i++) {
       cout << times[i] << " ";
    }

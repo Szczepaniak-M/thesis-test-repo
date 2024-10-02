@@ -11,6 +11,7 @@
       become: yes
       apt:
         name:
+          - bc
           - g++
         state: present
 
