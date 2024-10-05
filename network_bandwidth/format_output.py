@@ -34,9 +34,9 @@ def parse_iperf(file_path, suffix):
 
     data = {
         f'intervals_{suffix}': intervals,
-        f'connection_1_{suffix}': [connection_bandwidths[3].get(i, 0) for i in intervals],
-        f'connection_2_{suffix}': [connection_bandwidths[4].get(i, 0) for i in intervals],
-        f'connection_3_{suffix}': [connection_bandwidths[5].get(i, 0) for i in intervals],
+        f'connection_1_{suffix}': [connection_bandwidths[1].get(i, 0) for i in intervals],
+        f'connection_2_{suffix}': [connection_bandwidths[2].get(i, 0) for i in intervals],
+        f'connection_3_{suffix}': [connection_bandwidths[3].get(i, 0) for i in intervals],
         f'sum_bandwidth_{suffix}': [sum_bandwidth.get(i, 0) for i in intervals]
     }
 
