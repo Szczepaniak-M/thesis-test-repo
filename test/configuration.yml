@@ -1,6 +1,6 @@
 ---
 configuration:
-    name: SSD Bandwidth
+    name: SSD Bandwidth Benchmark
     description: Benchmark SSD IOPS using FIO
     directory: ssd_bandwidth
     cron: "0 * * * *"
