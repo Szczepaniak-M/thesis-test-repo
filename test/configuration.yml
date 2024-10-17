@@ -1,0 +1,63 @@
+---
+configuration:
+    name: Network Bandwidth
+    description: Benchmark testing network bandwidth over a time using iperf
+    directory: network_bandwidth
+    cron: "0 * * * *"
+    instance-number: 2
+    instance-types:
+      - t2.micro
+nodes:
+  - node-id: 0
+    ansible-configuration: ansible.yml
+
+  - node-id: 1
+    benchmark-command: ./run_bandwidth.sh
+    output-command: python3 format_output.py results_1.txt results_2.txt
+
+  - node-id: 2
+    benchmark-command: timeout 700 iperf -s
+    instance-type: t2.micro #c7gn.metal
+
+plots:
+  - type: line
+    title: Network Bandwidth over Time
+    xaxis: Time [s]
+    yaxis: Network Bandwidth [MB/s]
+    series:
+      - x: intervals_first_attempt
+        y: connection_min_first_attempt
+        legend: Minimum Connection Bandwidth
+
+      - x: intervals_first_attempt
+        y: connection_avg_first_attempt
+        legend: Average Connection Bandwidth
+
+      - x: intervals_first_attempt
+        y: connection_max_first_attempt
+        legend: Maximum Connection Bandwidth
+
+      - x: intervals_first_attempt
+        y: sum_bandwidth_first_attempt
+        legend: Connections Sum
+
+  - type: line
+    title: Network Bandwidth over Time after 6 minutes being idle
+    xaxis: Time [s]
+    yaxis: Network Bandwidth [MB/s]
+    series:
+      - x: intervals_second_attempt
+        y: connection_min_second_attempt
+        legend: Minimum Connection Bandwidth
+
+      - x: intervals_second_attempt
+        y: connection_avg_second_attempt
+        legend: Average Connection Bandwidth
+
+      - x: intervals_second_attempt
+        y: connection_max_second_attempt
+        legend: Maximum Connection Bandwidth
+
+      - x: intervals_second_attempt
+        y: sum_bandwidth_second_attempt
+        legend: Connections Sum
