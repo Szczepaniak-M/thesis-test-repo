@@ -31,8 +31,8 @@ jobs:
       id: find_new_config_files
       run: |
         git remote add incoming https://github.com/${{ github.event.pull_request.head.repo.full_name }}.git
-        git fetch origin ${{ github.event.pull_request.base.ref }}
-        git fetch incoming ${{ github.event.pull_request.head.ref }}
+        git fetch origin ${{ github.base_ref }}
+        git fetch incoming ${{ github.head_ref }}
         git diff --diff-filter=AM --name-only origin/${{ github.base_ref }} incoming/${{ github.head_ref }} | grep 'configuration.yml$' > new_config_files.txt || true
         file_count=$(wc -l < new_config_files.txt | xargs)
         echo "Number of new configuration.yml files: $file_count"
